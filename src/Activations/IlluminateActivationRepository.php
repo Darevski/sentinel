@@ -63,7 +63,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(UserInterface $user)
+    public function create(UserInterface $user, $group='general')
     {
         $activation = $this->createModel();
 
@@ -73,6 +73,8 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
 
         $activation->user_id = $user->getUserId();
 
+        $activation->group = $group;
+
         $activation->save();
 
         return $activation;
@@ -81,7 +83,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function exists(UserInterface $user, $code = null)
+    public function exists(UserInterface $user, $code = null, $group='general')
     {
         $expires = $this->expires();
 
@@ -90,6 +92,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
             ->newQuery()
             ->where('user_id', $user->getUserId())
             ->where('completed', false)
+            ->where('group', '=', $group)
             ->where('created_at', '>', $expires);
 
         if ($code) {
@@ -102,7 +105,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function complete(UserInterface $user, $code)
+    public function complete(UserInterface $user, $code, $group='general')
     {
         $expires = $this->expires();
 
@@ -111,6 +114,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
             ->newQuery()
             ->where('user_id', $user->getUserId())
             ->where('code', $code)
+            ->where('group', '=', $group)
             ->where('completed', false)
             ->where('created_at', '>', $expires)
             ->first();
@@ -132,13 +136,14 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function completed(UserInterface $user)
+    public function completed(UserInterface $user, $group ='general')
     {
         $activation = $this
             ->createModel()
             ->newQuery()
             ->where('user_id', $user->getUserId())
             ->where('completed', true)
+            ->where('group', '=', $group)
             ->first();
 
         return $activation ?: false;
@@ -147,7 +152,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function remove(UserInterface $user)
+    public function remove(UserInterface $user, $group ='general')
     {
         $activation = $this->completed($user);
 

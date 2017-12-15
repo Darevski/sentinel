@@ -28,43 +28,48 @@ interface ActivationRepositoryInterface
      * Create a new activation record and code.
      *
      * @param  \Cartalyst\Sentinel\Users\UserInterface  $user
+     * @param  string  $group
      * @return \Cartalyst\Sentinel\Activations\ActivationInterface
      */
-    public function create(UserInterface $user);
+    public function create(UserInterface $user, $group='general');
 
     /**
      * Checks if a valid activation for the given user exists.
      *
      * @param  \Cartalyst\Sentinel\Users\UserInterface  $user
      * @param  string  $code
+     * @param  string  $group
      * @return \Cartalyst\Sentinel\Activations\ActivationInterface|bool
      */
-    public function exists(UserInterface $user, $code = null);
+    public function exists(UserInterface $user, $code = null, $group = 'general');
 
     /**
      * Completes the activation for the given user.
      *
      * @param  \Cartalyst\Sentinel\Users\UserInterface  $user
      * @param  string  $code
+     * @param  string  $group
      * @return bool
      */
-    public function complete(UserInterface $user, $code);
+    public function complete(UserInterface $user, $code, $group = 'general');
 
     /**
      * Checks if a valid activation has been completed.
      *
      * @param  \Cartalyst\Sentinel\Users\UserInterface  $user
+     * @param  string $group
      * @return \Cartalyst\Sentinel\Activations\ActivationInterface|bool
      */
-    public function completed(UserInterface $user);
+    public function completed(UserInterface $user, $group = 'general');
 
     /**
      * Remove an existing activation (deactivate).
      *
      * @param  \Cartalyst\Sentinel\Users\UserInterface  $user
+     * @param  string  $group
      * @return bool|null
      */
-    public function remove(UserInterface $user);
+    public function remove(UserInterface $user, $group = 'general');
 
     /**
      * Remove expired activation codes.
