@@ -34,6 +34,7 @@ class EloquentActivation extends Model implements ActivationInterface
      */
     protected $fillable = [
         'code',
+        'group',
         'completed',
         'completed_at',
     ];
