@@ -149,6 +149,16 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
         return $activation ?: false;
     }
 
+    public function getUserByCode($code, $group = 'general'){
+        $activation = $this
+            ->createModel()
+            ->newQuery()
+            ->where('code','=',$code)
+            ->where('group','=',$group)
+            ->first();
+        return ($activation)? $activation->user : false;
+    }
+
     /**
      * {@inheritDoc}
      */

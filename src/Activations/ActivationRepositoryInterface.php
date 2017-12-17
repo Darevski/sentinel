@@ -77,4 +77,14 @@ interface ActivationRepositoryInterface
      * @return int
      */
     public function removeExpired();
+
+
+    /**
+     * Get user by Activation code
+     *
+     * @param string $code
+     * @param string $group
+     * @return \Cartalyst\Sentinel\Users\UserInterface  $user
+    */
+    public function getUserByCode($code, $group = 'general');
 }

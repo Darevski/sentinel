@@ -29,6 +29,8 @@ class EloquentActivation extends Model implements ActivationInterface
      */
     protected $table = 'activations';
 
+    protected static $userModel = 'Cartalyst\Sentinel\Users\EloquentUser';
+
     /**
      * {@inheritDoc}
      */
@@ -60,6 +62,16 @@ class EloquentActivation extends Model implements ActivationInterface
     {
         $this->attributes['completed'] = (bool) $completed;
     }
+
+    /**
+     * Returns the User Relationships
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
+    public function user(){
+        return $this->hasOne(static::$userModel,$user_id);
+    } 
+
 
     /**
      * {@inheritDoc}

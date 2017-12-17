@@ -34,6 +34,7 @@ class MigrationCartalystSentinel extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code');
+            $table->string('group');
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
